@@ -4,10 +4,6 @@ metadata:
   name: hello-ingress
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
-tls:
-  - hosts:
-    - hello.arepasoftware.com
-    secretName: arepasoftware-tls
 spec:
   rules:
   - host: hello.arepasoftware.com
