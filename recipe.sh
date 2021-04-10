@@ -35,7 +35,7 @@ microk8s.add-node
 
 microk8s dashboard-proxy &
 
-
+microk8s config
 
 
 ## install argo

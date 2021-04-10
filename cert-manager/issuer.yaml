@@ -1,0 +1,25 @@
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: letsencrypt-prod
+spec:
+  acme:
+    server: https://acme-v02.api.letsencrypt.org/directory
+    email: your@email.com
+    privateKeySecretRef:
+      name: letsencrypt-prod-secret
+    solvers:
+    - http01:
+       ingress:
+         class: nginx
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: arepasoftware-certificate
+spec:
+  secretName: arepasoftware.com-certificate
+  issuerRef:
+    name: letsencrypt-prod
+  dnsNames:
+  - arepasoftware.com
