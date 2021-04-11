@@ -1,3 +1,7 @@
+echo '##################################'
+echo '1- update apt'
+echo '##################################'
+
 apt update -qq
 
 apt-get install -qq --yes --force-yes  \
@@ -8,14 +12,19 @@ apt-get install -qq --yes --force-yes  \
   lsb-release \
   snapd
 
+echo '##################################'
+echo '2- install docker'
+echo '##################################'
+
 curl -fsSL https://get.docker.com -o get-docker.sh
 sh get-docker.sh
 
+echo '##################################'
+echo '3- install microk8s'
+echo '##################################'
 
 snap install core
 snap install microk8s --classic
-
-apt-get upgrade -y
 
 export PATH="$PATH:/snap/bin"
 
@@ -23,23 +32,15 @@ echo "alias kubectl='microk8s.kubectl'" >> ~/.bashrc
 
 source ~/.bashrc
 
+echo '##################################'
+echo '4- configure microk8s'
+echo '##################################'
+
 microk8s.enable dns dashboard registry
 microk8s.enable ingress
 microk8s.add-node
 
 
-#snap install kubectl --classic
-
-
-#-----#
-
 microk8s dashboard-proxy &
-
 microk8s config
 
-
-## install argo
-#kubectl create namespace argocd
-#kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
-##
-#kubectl get pods -n argocd | grep argocd-server
